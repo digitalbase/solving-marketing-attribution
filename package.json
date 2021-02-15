@@ -1,0 +1,31 @@
+{
+  "name": "solving-marketing-attribution",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitalbase/solving-marketing-attribution.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digitalbase/solving-marketing-attribution/issues"
+  },
+  "homepage": "https://github.com/digitalbase/solving-marketing-attribution#readme",
+  "dependencies": {
+    "aws-sdk": "^2.843.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.8.0"
+  }
+}
