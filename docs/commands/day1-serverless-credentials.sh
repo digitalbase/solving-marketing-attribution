@@ -1,0 +1,1 @@
+sls config credentials --provider aws --key YOURKEY --secret YOURSECRET

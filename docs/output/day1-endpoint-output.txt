@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 82
+Content-Type: text/html; charset=utf-8
+Date: Wed, 22 Apr 2020 19:29:44 GMT
+Via: 1.1 d1f9689a3caeb0a19dffbc049d2b2141.cloudfront.net (CloudFront)
+X-Amz-Cf-Id: WNTlEGv7ihx7UStbvc1-c2xAsyjFIzjDlRgw7enBP1IWGR27-Enliw==
+X-Amz-Cf-Pop: LHR61-C2
+X-Amzn-Trace-Id: Root=1-5ea09b28-b10adbf4536a00323c1bec80;Sampled=0
+X-Cache: Miss from cloudfront
+etag: W/"52-WjenCnXcPLNfe0kZO7NA0GScpyc"
+x-amz-apigw-id: LZ0uYGMGjoEF-7A=
+x-amzn-Remapped-content-length: 82
+x-amzn-RequestId: 2760ac24-8a9d-4666-8e84-47b0f6f906f9
+x-powered-by: Express
+
+Hi. Awesome guide. Keep reading @ https://medium.com/solving-marketing-attribution

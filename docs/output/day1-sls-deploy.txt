@@ -1,0 +1,17 @@
+Serverless: Packaging service...
+Serverless: Excluding development dependencies...
+Serverless: Service files not changed. Skipping deployment...
+Service Information
+service: solving-marketing-attribution
+stage: dev
+region: eu-west-1
+stack: solving-marketing-attribution-dev
+resources: 11
+api keys:
+  None
+endpoints:
+  POST - https://[YOURURL]/dev/hello
+functions:
+  hello: solving-marketing-attribution-dev-hello
+layers:
+  None
