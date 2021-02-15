@@ -1,0 +1,1 @@
+http GET $ENDPOINT_PROD/segment/identify/user/[YOUR_USER_ID]

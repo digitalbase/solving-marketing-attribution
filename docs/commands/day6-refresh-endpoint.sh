@@ -1,0 +1,1 @@
+export ENDPOINT_PROD=$(sls info --verbose --stage=prod | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1}')

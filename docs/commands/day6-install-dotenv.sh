@@ -1,0 +1,1 @@
+npm install serverless-dotenv-plugin --save

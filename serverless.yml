@@ -1,21 +1,20 @@
+service: ${env:SERVICE_NAME}
+
+package:
+  exclude:
+    - data/**
+    - events/**
+    - .idea
+
 plugins:
   - serverless-offline
-
-custom:
-  serviceName: 'solving-marketing-attribution'
-  serviceAbbreviation: 'sma'
-  tableIdentify: '${self:custom.serviceAbbreviation}-event-identify-${self:provider.stage}'
-  tablePage: '${self:custom.serviceAbbreviation}-event-page-${self:provider.stage}'
-  tableAttribution: '${self:custom.serviceAbbreviation}-attribution-${self:provider.stage}'
-  tableUserMapping: '${self:custom.serviceAbbreviation}-user-map-${self:provider.stage}'
-
-service: ${self:custom.serviceName}
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: dev
-  region: eu-west-1
+  stage: ${env:STAGE}
+  region: ${env:REGION}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -26,30 +25,17 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
         - dynamodb:ListStreams
+        - lambda:InvokeFunction
       Resource:
         - { "Fn::GetAtt": ["SegmentIdentifiesDynamoDBTable", "Arn" ] }
         - { "Fn::GetAtt": ["SegmentPageDynamoDBTable", "Arn" ] }
         - { "Fn::GetAtt": ["SegmentAttributionDynamoDBTable", "Arn" ] }
         - { "Fn::GetAtt": ["SegmentUserMappingDynamoDBTable", "Arn" ] }
-  environment:
-    IDENTIFY_TABLE: ${self:custom.tableIdentify}
-    PAGE_TABLE: ${self:custom.tablePage}
-    ATTRIBUTION_TABLE: ${self:custom.tableAttribution}
-    USER_MAP_TABLE: ${self:custom.tableUserMapping}
 
 functions:
-  hello:
-    handler: index.handler
-    events:
-      - http: 'POST /events'
-  getAnonymous:
-    handler: src/handlers/api/getAnonymous.handler
-    events:
-      - http: get /api/anonymous/{id}
-  getUser:
-    handler: src/handlers/api/getUser.handler
-    events:
-      - http: get /api/user/{id}
+  - ${file(src/handlers/api/api.serverless.yml)}
+  - ${file(src/handlers/process/process.serverless.yml)}
+  - ${file(src/handlers/segment/segment.serverless.yml)}
 
 resources:
   Resources:
@@ -65,7 +51,7 @@ resources:
           - AttributeName: messageId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:custom.tableIdentify}
+        TableName: ${env:IDENTIFY_TABLE}
     SegmentPageDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
@@ -78,7 +64,7 @@ resources:
           - AttributeName: messageId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:custom.tablePage}
+        TableName: ${env:PAGE_TABLE}
     SegmentAttributionDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
@@ -93,7 +79,7 @@ resources:
           - AttributeName: eventId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:custom.tableAttribution}
+        TableName: ${env:ATTRIBUTION_TABLE}
     SegmentUserMappingDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
@@ -108,4 +94,4 @@ resources:
           - AttributeName: anonymousId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:custom.tableUserMapping}
+        TableName: ${env:USER_MAP_TABLE}

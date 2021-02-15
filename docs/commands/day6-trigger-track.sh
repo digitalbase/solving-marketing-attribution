@@ -1,0 +1,1 @@
+http GET $ENDPOINT_PROD/segment/track/user/[YOUR_USER_ID]

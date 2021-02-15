@@ -1,0 +1,36 @@
+Serverless: DOTENV: Loading environment variables from .env:
+Serverless:   - STAGE
+Serverless:   - REGION
+Serverless:   - SERVICE_NAME
+Serverless:   - IDENTIFY_TABLE
+Serverless:   - PAGE_TABLE
+Serverless:   - ATTRIBUTION_TABLE
+Serverless:   - USER_MAP_TABLE
+Serverless:   - ANALYTICS_WRITE_KEY
+Serverless:   - ANALYTICS_SOURCE_IDENTIFICATION_EVENT
+Service Information
+service: sma
+stage: prod
+region: eu-west-1
+stack: sma-prod
+resources: 62
+api keys:
+  None
+endpoints:
+  GET - $ENDPOINT_PROD/api/anonymous/{id}
+  GET - $ENDPOINT_PROD/api/user/{id}
+  POST - $ENDPOINT_PROD/events
+  GET - $ENDPOINT_PROD/segment/identify/user/{id}
+  GET - $ENDPOINT_PROD/segment/track/anonymous/{id}
+  GET - $ENDPOINT_PROD/segment/track/user/{id}
+functions:
+  getAnonymous: sma-prod-getAnonymous
+  getUser: sma-prod-getUser
+  processPage: sma-prod-processPage
+  processIdentify: sma-prod-processIdentify
+  storeEvent: sma-prod-storeEvent
+  identifyUser: sma-prod-identifyUser
+  trackAnonymous: sma-prod-trackAnonymous
+  trackUser: sma-prod-trackUser
+layers:
+  None
