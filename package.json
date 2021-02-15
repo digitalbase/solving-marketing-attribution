@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/digitalbase/solving-marketing-attribution#readme",
   "dependencies": {
-    "aws-sdk": "^2.843.0"
+    "aws-sdk": "^2.843.0",
+    "prezly-inbound": "git+https://github.com/digitalbase/inbound.git"
   },
   "devDependencies": {
     "serverless-offline": "^6.8.0"

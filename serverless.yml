@@ -1,9 +1,13 @@
-service: solving-marketing-attribution
+service: segment-attribution
+
+plugins:
+  - serverless-offline
 
 custom:
-  # sma = Solving Marketing Attribution
-  tableIdentify: 'sma-identify-${self:provider.stage}'
-  tablePage: 'sma-event-page-${self:provider.stage}'
+  tableIdentify: 'segment-event-identify-${self:provider.stage}'
+  tablePage: 'segment-event-page-${self:provider.stage}'
+  tableAttribution: 'segment-event-attribution-${self:provider.stage}'
+  tableUserMapping: 'segment-event-user-map-${self:provider.stage}'
 
 provider:
   name: aws
@@ -21,23 +25,28 @@ provider:
         - dynamodb:DeleteItem
         - dynamodb:ListStreams
       Resource:
-        - { "Fn::GetAtt": ["SegmentIdentifyDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["SegmentIdentifiesDynamoDBTable", "Arn" ] }
         - { "Fn::GetAtt": ["SegmentPageDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["SegmentAttributionDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["SegmentUserMappingDynamoDBTable", "Arn" ] }
   environment:
     IDENTIFY_TABLE: ${self:custom.tableIdentify}
     PAGE_TABLE: ${self:custom.tablePage}
+    ATTRIBUTION_TABLE: ${self:custom.tableAttribution}
+    USER_MAP_TABLE: ${self:custom.tableUserMapping}
 
 functions:
-  hello:
-    handler: index.handler
-    events:
-      - http: 'POST /events'
+  - ${file(src/handlers/api/api.serverless.yml)}
+  - ${file(src/handlers/process.serverless.yml)}
+  - ${file(src/handlers/segment.serverless.yml)}
 
 resources:
   Resources:
-    SegmentIdentifyDynamoDBTable:
+    SegmentIdentifiesDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
         AttributeDefinitions:
           - AttributeName: messageId
             AttributeType: S
@@ -51,6 +60,8 @@ resources:
     SegmentPageDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
         AttributeDefinitions:
           - AttributeName: messageId
             AttributeType: S
@@ -61,3 +72,37 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.tablePage}
+    SegmentAttributionDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: anonymousId
+            AttributeType: S
+          - AttributeName: eventId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: anonymousId
+            KeyType: HASH
+          - AttributeName: eventId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableAttribution}
+    SegmentUserMappingDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: anonymousId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: anonymousId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableUserMapping}

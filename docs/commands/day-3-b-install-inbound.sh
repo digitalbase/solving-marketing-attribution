@@ -1,0 +1,1 @@
+npm install --save https://github.com/digitalbase/inbound
