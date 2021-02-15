@@ -1,0 +1,1 @@
+http GET $BASE_DOMAIN/api/user/john@gmail.com

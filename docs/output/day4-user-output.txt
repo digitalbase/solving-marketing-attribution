@@ -1,0 +1,50 @@
+http GET $BASE_DOMAIN/api/user/john@gmail.com
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 976
+Content-Type: application/json
+Date: Sat, 25 Apr 2020 09:17:07 GMT
+Via: 1.1 5da47734f496c05ba90c546c024fb779.cloudfront.net (CloudFront)
+X-Amz-Cf-Id: hfpCCsc632rf_84U_bPXU2HRZep6oK_U4vnHQTGoHT3olX7BmoXq1w==
+X-Amz-Cf-Pop: LHR61-C2
+X-Amzn-Trace-Id: Root=1-5ea40012-442f3f982a8b83b4481e7856;Sampled=0
+X-Cache: Miss from cloudfront
+x-amz-apigw-id: LiTy7Eg3DoEF1aA=
+x-amzn-RequestId: 3e60f0df-3f3a-4578-be57-188d5f697e8e
+
+{
+    "anonymousIds": [
+        "f1ef0f8d-68d2-4fbc-a7e6-cade9d42f3aa"
+    ],
+    "sessions": [
+        [
+            {
+                "anonymousId": "f1ef0f8d-68d2-4fbc-a7e6-cade9d42f3aa",
+                "eventId": "2020-04-25T08:27:08.257Z-ajs-534d538d5ccb72c0da98473f25c91f49",
+                "messageId": "ajs-534d538d5ccb72c0da98473f25c91f49",
+                "referrer": {
+                    "network": "linkedin",
+                    "type": "social"
+                },
+                "referrerUrl": "https://www.linkedin.com/",
+                "timestamp": "2020-04-25T08:27:08.257Z",
+                "url": "https://www.prezly.com/case-studies/m-and-c-communications?li_fat_id=7c4f0e4a-9902-49af-83d2-3d2c803037af",
+                "userId": null
+            },
+            {
+                "anonymousId": "f1ef0f8d-68d2-4fbc-a7e6-cade9d42f3aa",
+                "eventId": "2020-04-25T08:45:34.315Z-ajs-26168b569103f6176c369916e2b74d4a",
+                "messageId": "ajs-26168b569103f6176c369916e2b74d4a",
+                "referrer": {
+                    "engine": "google",
+                    "host": "www.google.com",
+                    "type": "search"
+                },
+                "referrerUrl": "https://www.google.com/",
+                "timestamp": "2020-04-25T08:45:34.315Z",
+                "url": "https://www.prezly.com/academy/relationships/corporate-social-responsibility/the-relationship-between-pr-and-csr",
+                "userId": null
+            }
+        ]
+    ]
+}

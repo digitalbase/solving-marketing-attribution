@@ -1,0 +1,44 @@
+http GET $BASE_DOMAIN/api/anonymous/da8011b3-19bf-4d3d-b1b6-caa961cb5161
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Length: 783
+Content-Type: application/json
+Date: Sat, 25 Apr 2020 09:15:33 GMT
+Via: 1.1 320b04684a5b16980772c5d36c63ecea.cloudfront.net (CloudFront)
+X-Amz-Cf-Id: ONXCrxrOY2wufV6Gu8UtVjaCER_PHtWtA1JUw3Dx4fFK8OHQN1nL4g==
+X-Amz-Cf-Pop: LHR61-C2
+X-Amzn-Trace-Id: Root=1-5ea3ffb5-b7e30caadb18a74e68163166;Sampled=0
+X-Cache: Miss from cloudfront
+x-amz-apigw-id: LiTkUG-4joEFrgQ=
+x-amzn-RequestId: 3e1dd584-da7d-40fa-9527-ecb4d7e9f2e1
+
+{
+    "sessions": [
+        {
+            "anonymousId": "da8011b3-19bf-4d3d-b1b6-caa961cb5161",
+            "eventId": "2020-03-25T08:35:18.281Z-ajs-9662bd147ae61e72db92055f52810bd9",
+            "messageId": "ajs-9662bd147ae61e72db92055f52810bd9",
+            "referrer": {
+                "engine": "google",
+                "host": "www.google.co.in",
+                "type": "search"
+            },
+            "referrerUrl": "https://www.google.co.in/",
+            "timestamp": "2020-03-25T08:35:18.281Z",
+            "url": "https://www.prezly.com/academy/relationships/crisis-communication/the-best-managed-pr-crises-of-2018",
+            "userId": null
+        },
+        {
+            "anonymousId": "da8011b3-19bf-4d3d-b1b6-caa961cb5161",
+            "eventId": "2020-04-25T08:57:53.206Z-ajs-3b9ef982cdc9fde05a313068b7b39be5",
+            "messageId": "ajs-3b9ef982cdc9fde05a313068b7b39be5",
+            "referrer": {
+                "type": "direct"
+            },
+            "referrerUrl": null,
+            "timestamp": "2020-04-25T08:57:53.206Z",
+            "url": "https://www.prezly.com",
+            "userId": null
+        }
+    ]
+}
