@@ -42,6 +42,14 @@ functions:
     handler: index.handler
     events:
       - http: 'POST /events'
+  getAnonymous:
+    handler: src/handlers/api/getAnonymous.handler
+    events:
+      - http: get /api/anonymous/{id}
+  getUser:
+    handler: src/handlers/api/getUser.handler
+    events:
+      - http: get /api/user/{id}
 
 resources:
   Resources:
