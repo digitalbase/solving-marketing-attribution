@@ -1,0 +1,42 @@
+{
+  "anonymousId": "a5b62615-cf5e-4e1c-bd01-a9852914baaa",
+  "context": {
+    "campaign": {
+      "medium": "ppc",
+      "name": "High Intent Keywords",
+      "source": "adwords",
+      "term": ""
+    },
+    "ip": "8.8.8.8",
+    "library": {
+      "name": "analytics.js",
+      "version": "3.11.4"
+    },
+    "locale": "en-US",
+    "page": {
+      "path": "/press-release-examples",
+      "referrer": "https://www.google.com/",
+      "search": "?utm_term=&utm_campaign=High+intent+Keywords&utm_source=adwords&utm_medium=ppc&hsa_grp=5&hsa_cam=160858s191&hsa_src=g&hsa_tgt=dsa-877asda743510184&hsa_net=adwords&hsa_ad=4197063512adas53&hsa_kw=&hsa_ver=3&gclid=CjwKCAjw1v_0BRasdasdAkEiwALFkj5darpcyuadczuYZRGOVBxudIwY3Xl7PBqJjxCyAUaEElPbyCqToEq0QwXBhoCvl8QAvD_BwE",
+      "title": "How to craft a killer Press Release (with 142 examples)",
+      "url": "https://www.prezly.com/press-release-examples?utm_term=&utm_campaign=Re+-+High+intent+keywords&utm_source=adwords&utm_medium=ppc&hsa_grp=99459701487&hsa_mt=b&hsa_acc=8390923425&hsa_cam=160858191&hsa_src=g&hsa_tgt=dsa-877743510184&hsa_net=adwords&hsa_ad=419706351253&hsa_kw=&hsa_ver=3&gclid=CjwKCAjw1v_0BRAkEiwALFkj5rpcyuczuYZRGOVBxudIWY3Xl7PBqJjCyAUaEElPbyCqToEq0QwXBhoCvl8QAvD_BwE"
+    },
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36"
+  },
+  "integrations": {
+    "All": true
+  },
+  "messageId": "ajs-88055880c705d64737bd77afe09fe03d",
+  "originalTimestamp": "2020-04-22T19:49:24.086Z",
+  "properties": {
+    "path": "/press-release-examples",
+    "referrer": "https://www.google.com/",
+    "search": "?utm_term=&utm_campaign=Re+-+High+intent+keywords&utm_source=adwords&utm_medium=ppc&hsa_grp=99459701487&hsa_mt=b&hsa_acc=8390923425&hsa_cam=160858191&hsa_src=g&hsa_tgt=dsa-877743510184&hsa_net=adwords&hsa_ad=419706351253&hsa_kw=&hsa_ver=3&gclid=CjwKCAjw1v_0BRAkEiwALFkj5rpcyuczuYZRGOVBxudIWY3Xl7PBqJjCyAUaEElPbyCqToEq0QwXBhoCvl8QAvD_BwE",
+    "title": "How to craft a killer Press Release (with 142 examples)",
+    "url": "https://www.prezly.com/press-release-examples?utm_term=&utm_campaign=Re+-+High+intent&utm_source=adwords&utm_medium=ppc&hsa_grp=99459701487&hsa_mt=b&hsa_acc=8390923425&hsa_cam=160858191&hsa_src=g&hsa_tgt=dsa-877743510184&hsa_net=adwords&hsa_ad=419706351253&hsa_kw=&hsa_ver=3&gclid=CjwKCAjw1v_0BRAkEiwALFkj5rpcyuczuYZRGOVBxudIWY3Xl7PBqJjCyAUaEElPbyCqToEq0QwXBhoCvl8QAvD_BwE"
+  },
+  "receivedAt": "2020-04-22T19:49:24.424Z",
+  "sentAt": "2020-04-22T19:49:24.090Z",
+  "timestamp": "2020-04-22T19:49:24.420Z",
+  "type": "page",
+  "userId": null
+}

@@ -1,0 +1,24 @@
+{
+  "anonymousId": "f1ef0f8d-68d2-4fbc-a7e6-cade9d42f3aa",
+  "context": {
+    "ip": "8.8.8.8",
+    "library": {
+      "name": "analytics.js",
+      "version": "3.11.4"
+    },
+    "locale": "pt-BR",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 Safari/537.36"
+  },
+  "integrations": {},
+  "messageId": "ajs-d19c0a0b9109264efd4328fe62e95de9",
+  "originalTimestamp": "2020-04-22T19:50:21.915Z",
+  "receivedAt": "2020-04-22T19:50:24.010Z",
+  "sentAt": "2020-04-22T19:50:21.918Z",
+  "timestamp": "2020-04-22T19:50:24.007Z",
+  "traits": {
+    "created": "2017-08-16T07:23:26.000Z",
+    "email": "john@gmail.com"
+  },
+  "type": "identify",
+  "userId": "john@gmail.com"
+}

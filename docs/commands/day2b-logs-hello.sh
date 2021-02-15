@@ -1,0 +1,1 @@
+sls logs --function=hello -t | tr '\r' '\n'
