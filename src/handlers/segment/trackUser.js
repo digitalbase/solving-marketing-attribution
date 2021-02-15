@@ -7,7 +7,7 @@ const SegmentTracker = new SegmentTracking();
 exports.handler = async (event) => {
     const { id } = event.pathParameters;
 
-    await SegmentTracker.trackUser(id, false);
+    await SegmentTracker.trackUser(id, true);
 
     return ok('Track Completed');
 };
