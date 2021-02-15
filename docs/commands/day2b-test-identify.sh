@@ -1,1 +1,1 @@
-http POST https://YOURURL/dev/events < events/identify.json
+http POST https://YOURURL/dev/events < docs/events/identify.json

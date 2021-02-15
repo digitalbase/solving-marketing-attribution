@@ -1,45 +1,38 @@
-const serverless = require('serverless-http');
-const bodyParser = require('body-parser');
-const express = require('express');
-const app = express();
-const AWS = require('aws-sdk');
+const dynamoDBFactory = require('./src/dynamodb.factory');
+const dynamoDb = dynamoDBFactory();
+
+const { withStatusCode } = require('./src/utils/response.util');
+const { parseWith } = require('./src/utils/request.util');
+
+const parseJson = parseWith(JSON.parse);
+const ok = withStatusCode(200);
+const problem = withStatusCode(400);
 
 const IDENTIFY_TABLE = process.env.IDENTIFY_TABLE;
-const TRACK_TABLE = process.env.TRACK_TABLE;
-const dynamoDb = new AWS.DynamoDB.DocumentClient( {
-    // ensures empty values (userId = null) are converted
-    // more @ https://stackoverflow.com/questions/37479586/nodejs-with-dynamodb-throws-error-attributevalue-may-not-contain-an-empty-strin
-    convertEmptyValues: true
-});
+const PAGE_TABLE = process.env.PAGE_TABLE;
 
-app.use(bodyParser.json({ strict: false }));
+exports.handler = async (event) => {
+    const request_body = parseJson(event.body);
+    const { type, messageId } = request_body;
 
-// Create User endpoint
-app.post('/events', function (req, res) {
-    const request_body = req.body;
-    const type = request_body.type;
-
-    if (type === 'page' || type === 'identify') {
-        const { messageId } = req.body;
-
-        const params = {
-            TableName: ( type === 'identify' ? IDENTIFY_TABLE : TRACK_TABLE),
-            Item: {
-                messageId: messageId,
-                ...request_body,
-            },
-        };
-
-        dynamoDb.put(params, (error) => {
-            if (error) {
-                console.log(error);
-                res.status(400).json({ error: 'Could not store event' });
-            }
-            res.json({ messageId, request_body });
-        });
-    } else {
-        res.status(200).send(`Not a page / identify event. Skipping`);
+    if (type !== 'page' && type !== 'identify') {
+        return ok('not a page');
     }
-});
 
-module.exports.handler = serverless(app);
+    const params = {
+        TableName: ( type === 'identify' ? IDENTIFY_TABLE : PAGE_TABLE),
+        Item: {
+            messageId,
+            ...request_body
+        },
+    };
+
+    try {
+        await dynamoDb.put(params).promise();
+    } catch (e) {
+        console.log('Could not store event', e);
+        return problem(e.message);
+    }
+
+    return ok();
+};

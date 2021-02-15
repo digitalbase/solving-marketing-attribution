@@ -3,7 +3,7 @@ service: solving-marketing-attribution
 custom:
   # sma = Solving Marketing Attribution
   tableIdentify: 'sma-identify-${self:provider.stage}'
-  tableTrack: 'sma-event-track-${self:provider.stage}'
+  tablePage: 'sma-event-page-${self:provider.stage}'
 
 provider:
   name: aws
@@ -22,10 +22,10 @@ provider:
         - dynamodb:ListStreams
       Resource:
         - { "Fn::GetAtt": ["SegmentIdentifyDynamoDBTable", "Arn" ] }
-        - { "Fn::GetAtt": ["SegmentTrackDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["SegmentPageDynamoDBTable", "Arn" ] }
   environment:
     IDENTIFY_TABLE: ${self:custom.tableIdentify}
-    TRACK_TABLE: ${self:custom.tableTrack}
+    PAGE_TABLE: ${self:custom.tablePage}
 
 functions:
   hello:
@@ -48,7 +48,7 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.tableIdentify}
-    SegmentTrackDynamoDBTable:
+    SegmentPageDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
       Properties:
         AttributeDefinitions:
@@ -60,4 +60,4 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:custom.tableTrack}
+        TableName: ${self:custom.tablePage}
