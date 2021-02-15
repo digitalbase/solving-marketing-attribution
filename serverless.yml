@@ -1,13 +1,15 @@
-service: segment-attribution
-
 plugins:
   - serverless-offline
 
 custom:
-  tableIdentify: 'segment-event-identify-${self:provider.stage}'
-  tablePage: 'segment-event-page-${self:provider.stage}'
-  tableAttribution: 'segment-event-attribution-${self:provider.stage}'
-  tableUserMapping: 'segment-event-user-map-${self:provider.stage}'
+  serviceName: 'solving-marketing-attribution'
+  serviceAbbreviation: 'sma'
+  tableIdentify: '${self:custom.serviceAbbreviation}-event-identify-${self:provider.stage}'
+  tablePage: '${self:custom.serviceAbbreviation}-event-page-${self:provider.stage}'
+  tableAttribution: '${self:custom.serviceAbbreviation}-attribution-${self:provider.stage}'
+  tableUserMapping: '${self:custom.serviceAbbreviation}-user-map-${self:provider.stage}'
+
+service: ${self:custom.serviceName}
 
 provider:
   name: aws
@@ -36,9 +38,10 @@ provider:
     USER_MAP_TABLE: ${self:custom.tableUserMapping}
 
 functions:
-  - ${file(src/handlers/api/api.serverless.yml)}
-  - ${file(src/handlers/process.serverless.yml)}
-  - ${file(src/handlers/segment.serverless.yml)}
+  hello:
+    handler: index.handler
+    events:
+      - http: 'POST /events'
 
 resources:
   Resources:
