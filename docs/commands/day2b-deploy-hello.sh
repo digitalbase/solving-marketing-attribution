@@ -1,0 +1,1 @@
+sls deploy --function=hello

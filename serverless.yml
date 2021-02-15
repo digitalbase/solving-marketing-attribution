@@ -1,13 +1,63 @@
 service: solving-marketing-attribution
+
+custom:
+  # sma = Solving Marketing Attribution
+  tableIdentify: 'sma-identify-${self:provider.stage}'
+  tableTrack: 'sma-event-track-${self:provider.stage}'
+
 provider:
   name: aws
   runtime: nodejs10.x
   stage: dev
   region: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:ListStreams
+      Resource:
+        - { "Fn::GetAtt": ["SegmentIdentifyDynamoDBTable", "Arn" ] }
+        - { "Fn::GetAtt": ["SegmentTrackDynamoDBTable", "Arn" ] }
+  environment:
+    IDENTIFY_TABLE: ${self:custom.tableIdentify}
+    TRACK_TABLE: ${self:custom.tableTrack}
+
 functions:
   hello:
-    handler: handler.hello
+    handler: index.handler
     events:
-      - http:
-          path: hello
-          method: post
+      - http: 'POST /events'
+
+resources:
+  Resources:
+    SegmentIdentifyDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: messageId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: messageId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableIdentify}
+    SegmentTrackDynamoDBTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: messageId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: messageId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableTrack}
