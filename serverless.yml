@@ -64,9 +64,7 @@ resources:
         KeySchema:
           - AttributeName: messageId
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.tableIdentify}
     SegmentPageDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -79,9 +77,7 @@ resources:
         KeySchema:
           - AttributeName: messageId
             KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.tablePage}
     SegmentAttributionDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -96,9 +92,7 @@ resources:
             KeyType: HASH
           - AttributeName: eventId
             KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.tableAttribution}
     SegmentUserMappingDynamoDBTable:
       Type: 'AWS::DynamoDB::Table'
@@ -113,7 +107,5 @@ resources:
             KeyType: HASH
           - AttributeName: anonymousId
             KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.tableUserMapping}
