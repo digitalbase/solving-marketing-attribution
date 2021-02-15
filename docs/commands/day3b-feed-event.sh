@@ -1,0 +1,1 @@
+http POST $BASE_DOMAIN/events < events/page.json
