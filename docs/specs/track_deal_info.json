@@ -1,0 +1,23 @@
+{
+  "active": false,
+  "messageId": "",
+  "receivedAt": "2020-05-18T09:03:02.272Z",
+  "traits": {
+    "company": "Company Name",
+    "created_at": "1570110286549",
+    "demo_by": "Gijs",
+    "is_marketing_qualified": true,
+    "is_sales_qualified": true,
+    "lastSyncedSma": "2020-05-18T09:03:01.820Z",
+    "name": "John Doe",
+    "lead_status": "new",
+    "lifecycle_stage": "new",
+    "meeting_status": "planned",
+    "priority": "medium",
+    "last_deal_amount": 7200,
+    "last_deal_currency": "eur",
+    "last_deal_stage": "open"
+  },
+  "type": "identify",
+  "userId": "[userID]"
+}
