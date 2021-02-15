@@ -1,0 +1,1 @@
+npm remove body-parser express serverless-http --save
