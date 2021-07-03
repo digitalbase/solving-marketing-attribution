@@ -137,24 +137,48 @@ class SegmentTracking {
         });
     }
 
-    async trackAnonymous(anonymous_id) {
+    async trackAnonymous(anonymous_id, include_track_events= false) {
         const attributionSessions = await this._model_source.getForAnonymousId(anonymous_id);
         let data = [];
 
-        attributionSessions.forEach((session) => {
-            //console.log(session.timestamp);
-            const tracking_properties = {
-                type: "track",
+        if (attributionSessions.length > 0) {
+            const [first] = attributionSessions;
+            const [last] = [...attributionSessions ].reverse(); //to not modify the original
+            const user_properties = {
+                type: "identify",
                 anonymousId: anonymous_id,
-                event: SOURCE_IDENTIFIED_EVENT_NAME,
-                timestamp: session.timestamp,
-                properties: this.extractPropertiesFromEvent(session)
+                active: false,
+                ip: null,
+                context: {
+                    active:false
+                },
+                traits: {
+                    lastSyncedSma: new Date(),
+                    ...this.extractPropertiesFromEvent(first, 'source_first'),
+                    ...this.extractPropertiesFromEvent(last, 'source_last'),
+                }
             };
 
-            data.push(tracking_properties);
+            data.push(user_properties);
+        }
 
-            //console.log(tracking_properties);
-        });
+        if (include_track_events) {
+            attributionSessions.forEach((session) => {
+                console.log(session);
+                const tracking_properties = {
+                    type: "track",
+                    anonymousId: anonymous_id,
+                    event: SOURCE_IDENTIFIED_EVENT_NAME,
+                    timestamp: session.timestamp,
+                    properties: this.extractPropertiesFromEvent(session)
+                };
+
+                data.push(tracking_properties);
+
+                //console.log(tracking_properties);
+            });
+        }
+
 
         return this.callSegment(data);
     }

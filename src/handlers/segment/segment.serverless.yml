@@ -1,20 +1,20 @@
-  storeEvent:
-    handler: src/handlers/segment/storeEvent.handler
-    events:
-      - http: 'POST /events'
-  identifyUser:
-    handler: src/handlers/segment/identifyUser.handler
-    events:
-      - http: 'GET /segment/identify/user/{id}'
-  trackAnonymous:
-    handler: src/handlers/segment/trackAnonymous.handler
-    events:
-      - http: 'GET /segment/track/anonymous/{id}'
-  trackUser:
-    handler: src/handlers/segment/trackUser.handler
-    events:
-      - http: 'GET /segment/track/user/{id}'
-  trackHubspot:
-    handler: src/handlers/segment/trackHubspot.handler
-    events:
-      - http: 'GET /segment/track/sales/user/{id}/email/{email}'
+storeEvent:
+  handler: src/handlers/segment/storeEvent.handler
+  events:
+    - http: 'POST /events'
+identifyUser:
+  handler: src/handlers/segment/identifyUser.handler
+  events:
+    - http: 'GET /segment/identify/user/{id}'
+identifyAnonymous:
+  handler: src/handlers/segment/identifyAnonymous.handler
+  events:
+    - http: 'GET /segment/identify/anonymous/{id}'
+trackUser:
+  handler: src/handlers/segment/trackUser.handler
+  events:
+    - http: 'GET /segment/track/user/{id}'
+identifyAttribution:
+  handler: src/handlers/segment/identifyAttribution.handler
+  events:
+    - http: 'POST /segment/identify/attribution'
