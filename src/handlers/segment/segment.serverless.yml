@@ -2,6 +2,13 @@ storeEvent:
   handler: src/handlers/segment/storeEvent.handler
   events:
     - http: 'POST /events'
+
+trackUser:
+  handler: src/handlers/segment/trackUser.handler
+  events:
+    - http: 'GET /segment/track/user/{id}'
+
+## Fill in visitor sources (channel)
 identifyUser:
   handler: src/handlers/segment/identifyUser.handler
   events:
@@ -10,11 +17,17 @@ identifyAnonymous:
   handler: src/handlers/segment/identifyAnonymous.handler
   events:
     - http: 'GET /segment/identify/anonymous/{id}'
-trackUser:
-  handler: src/handlers/segment/trackUser.handler
-  events:
-    - http: 'GET /segment/track/user/{id}'
 identifyAttribution:
   handler: src/handlers/segment/identifyAttribution.handler
   events:
     - http: 'POST /segment/identify/attribution'
+
+## Fill in sales data
+identifyUserSales:
+  handler: src/handlers/segment/identifyUserSales.handler
+  events:
+    - http: 'GET /segment/identify/user/{id}/sales'
+identifyUserSalesPOST:
+  handler: src/handlers/segment/identifyUserSalesPost.handler
+  events:
+    - http: 'POST /segment/identify/sales'
