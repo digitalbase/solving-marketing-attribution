@@ -1,4 +1,4 @@
-const dynamoDBFactory = require('../../dynamodb.factory');
+const dynamoDBFactory = require('../../utils/dynamodb.factory');
 const dynamoDb = dynamoDBFactory();
 
 const { withStatusCode } = require('../../utils/response.util');

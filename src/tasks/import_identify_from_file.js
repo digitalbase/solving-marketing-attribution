@@ -8,7 +8,7 @@ const async = require('async');
 const CSV_FILENAME = process.argv[2];
 const DYNAMODB_TABLENAME = 'sma-identify-event-dev';
 
-const dynamoDBFactory = require('../dynamodb.factory');
+const dynamoDBFactory = require('../utils/dynamodb.factory');
 const dynamoDb = dynamoDBFactory();
 
 const rs = fs.createReadStream(CSV_FILENAME);
