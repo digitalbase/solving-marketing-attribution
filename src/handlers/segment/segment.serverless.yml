@@ -8,7 +8,7 @@ trackUser:
   events:
     - http: 'GET /segment/track/user/{id}'
 
-## Fill in visitor sources (channel)
+## Fill in visitor sources (channel) or s
 identifyUser:
   handler: src/handlers/segment/identifyUser.handler
   events:
@@ -17,6 +17,9 @@ identifyAnonymous:
   handler: src/handlers/segment/identifyAnonymous.handler
   events:
     - http: 'GET /segment/identify/anonymous/{id}'
+
+
+## Do channel or sales attribution (based on segment key)
 identifyAttribution:
   handler: src/handlers/segment/identifyAttribution.handler
   events:
@@ -27,7 +30,4 @@ identifyUserSales:
   handler: src/handlers/segment/identifyUserSales.handler
   events:
     - http: 'GET /segment/identify/user/{id}/sales'
-identifyUserSalesPOST:
-  handler: src/handlers/segment/identifyUserSalesPost.handler
-  events:
-    - http: 'POST /segment/identify/sales'
+

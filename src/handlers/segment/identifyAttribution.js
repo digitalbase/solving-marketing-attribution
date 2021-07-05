@@ -18,22 +18,34 @@ exports.handler = async (event) => {
     }
 
     if (
-        traits['j_o_visitor_attribution__update_traits_first_last_attribution_yuno7'] !== true &&
-        traits['j_o_visitor_attribution_copy__update_traits_first_last_attribution_5flui'] !== true
+        traits['j_o_visitor_attribution__update_traits_first_last_attribution_yuno7'] === true ||
+        traits['j_o_visitor_attribution_copy__update_traits_first_last_attribution_5flui'] === true
     ) {
-        return ok('not not a last_attribution_wv3dl identify call');
+        const include_track_events = false;
+        if (userId) {
+            await SegmentTracker.trackUser(userId, include_track_events);
+        } else if (anonymousId) {
+            await SegmentTracker.trackAnonymous(anonymousId, include_track_events);
+        }
+
+        return ok('Web Channel Source Attribution done');
     }
 
-    console.log(`User ${userId}`);
-    console.log(`Anonymous ${anonymousId}`);
+    if (
+        traits['j_o_sales_attribution__sales_attribution_1_day_1yq1c'] === true ||
+        traits['j_o_sales_attribution__sales_attribution_3_days_qqrve'] === true ||
+        traits['j_o_sales_attribution__sales_attribution_7_days_607hs'] === true ||
+        traits['j_o_sales_attribution__sales_attribution_21_days_lzu3g'] === true
+    ) {
+        if (userId) {
+            await SegmentTracker.trackUserSales(userId);
+        }
 
-    const include_track_events = false;
-    if (userId) {
-        await SegmentTracker.trackUser(userId, include_track_events);
-    } else if (anonymousId) {
-        await SegmentTracker.trackAnonymous(anonymousId, include_track_events);
+        return ok('Web Channel Source Attribution done');
     }
 
 
-    return ok();
+
+    return problem('Incorrect payload.');
+
 };
