@@ -1,5 +1,5 @@
 const { withStatusCode } = require('../../utils/response.util');
-const dynamoDBFactory = require('../../dynamodb.factory');
+const dynamoDBFactory = require('../../utils/dynamodb.factory');
 const { UserToAnonymousModel } = require('../../models/UserToAnonymous');
 const { SourceAttributionModel } = require('../../models/SourceAttribution');
 

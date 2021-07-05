@@ -1,3 +1,4 @@
 .idea
+.env.production
 .serverless
 node_modules

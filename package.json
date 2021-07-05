@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/digitalbase/solving-marketing-attribution#readme",
   "dependencies": {
+    "airtable-plus": "^1.0.4",
     "aws-sdk": "^2.843.0",
     "prezly-inbound": "git+https://github.com/digitalbase/inbound.git",
     "serverless-dotenv-plugin": "^3.3.0"

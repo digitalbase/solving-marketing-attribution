@@ -1,11 +1,18 @@
 // src/SegmentTracking.js
 const https = require('https');
 
-const dynamoDBFactory = require('./dynamodb.factory');
+const dynamoDBFactory = require('./utils/dynamodb.factory');
 const {UserToAnonymousModel} = require('./models/UserToAnonymous');
 const {SourceAttributionModel} = require('./models/SourceAttribution');
 
 const SOURCE_IDENTIFIED_EVENT_NAME = process.env.ANALYTICS_SOURCE_IDENTIFICATION_EVENT;
+
+const AirtablePlus = require('airtable-plus');
+const airtable = new AirtablePlus({
+    baseID: process.env.AIRTABLE_BASE_ID,
+    apiKey: process.env.AIRTABLE_API_KEY,
+    tableName: process.env.AIRTABLE_TABLE_NAME,
+});
 
 class SegmentTracking {
     constructor() {
@@ -96,6 +103,47 @@ class SegmentTracking {
         return this.callSegment(data);
     }
 
+    async trackUserSales(user_id) {
+
+        let data = [];
+
+        const airtableRecords = await airtable.read({
+            maxRecords: 3,
+            filterByFormula: `{analyticsUserId} = '${user_id}'`,
+            sort: [{field: "createdAt", direction: "desc"}],
+        });
+
+        if (!airtableRecords || !airtableRecords[0] || !airtableRecords[0].fields) {
+            return;
+        }
+
+        const airtableRecord = airtableRecords[0].fields;
+
+        const user_properties = {
+            type: "identify",
+            userId: user_id,
+            active: false,
+            ip: null,
+            context: {
+                active:false
+            },
+            traits: {
+                lastSyncedSales: new Date(),
+                health_score: airtableRecord.healthscore,
+                mrr: airtableRecord.MRR ? airtableRecord.MRR : null,
+                qualification: airtableRecord.qualification ? airtableRecord.qualification.toLowerCase() : '',
+                trial_status: airtableRecord.trialLifecycle ? airtableRecord.trialLifecycle.toLowerCase() : '',
+                plan: airtableRecord.plan,
+                lead_status: airtableRecord.licenseStatus,
+            }
+        };
+
+        //console.log(user_properties);
+        data.push(user_properties);
+
+        return this.callSegment(data);
+    }
+
     async callSegment(events) {
         return new Promise((resolve, reject) => {
             const data = JSON.stringify({ batch: events });
@@ -137,24 +185,48 @@ class SegmentTracking {
         });
     }
 
-    async trackAnonymous(anonymous_id) {
+    async trackAnonymous(anonymous_id, include_track_events= false) {
         const attributionSessions = await this._model_source.getForAnonymousId(anonymous_id);
         let data = [];
 
-        attributionSessions.forEach((session) => {
-            //console.log(session.timestamp);
-            const tracking_properties = {
-                type: "track",
+        if (attributionSessions.length > 0) {
+            const [first] = attributionSessions;
+            const [last] = [...attributionSessions ].reverse(); //to not modify the original
+            const user_properties = {
+                type: "identify",
                 anonymousId: anonymous_id,
-                event: SOURCE_IDENTIFIED_EVENT_NAME,
-                timestamp: session.timestamp,
-                properties: this.extractPropertiesFromEvent(session)
+                active: false,
+                ip: null,
+                context: {
+                    active:false
+                },
+                traits: {
+                    lastSyncedSma: new Date(),
+                    ...this.extractPropertiesFromEvent(first, 'source_first'),
+                    ...this.extractPropertiesFromEvent(last, 'source_last'),
+                }
             };
 
-            data.push(tracking_properties);
+            data.push(user_properties);
+        }
 
-            //console.log(tracking_properties);
-        });
+        if (include_track_events) {
+            attributionSessions.forEach((session) => {
+                console.log(session);
+                const tracking_properties = {
+                    type: "track",
+                    anonymousId: anonymous_id,
+                    event: SOURCE_IDENTIFIED_EVENT_NAME,
+                    timestamp: session.timestamp,
+                    properties: this.extractPropertiesFromEvent(session)
+                };
+
+                data.push(tracking_properties);
+
+                //console.log(tracking_properties);
+            });
+        }
+
 
         return this.callSegment(data);
     }
