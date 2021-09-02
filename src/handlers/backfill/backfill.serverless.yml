@@ -1,0 +1,9 @@
+fillPageEvent:
+  handler: src/handlers/backfill/fillPageEvent.handler
+  events:
+    - http: 'GET /backfill/page-event/{messageId}'
+
+fillIdentifyEvent:
+  handler: src/handlers/backfill/fillIdentifyEvent.handler
+  events:
+    - http: 'GET /backfill/identify-event/{messageId}'

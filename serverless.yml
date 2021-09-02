@@ -36,6 +36,7 @@ functions:
   - ${file(src/handlers/api/api.serverless.yml)}
   - ${file(src/handlers/process/process.serverless.yml)}
   - ${file(src/handlers/segment/segment.serverless.yml)}
+  - ${file(src/handlers/backfill/backfill.serverless.yml)}
 
 resources:
   Resources:

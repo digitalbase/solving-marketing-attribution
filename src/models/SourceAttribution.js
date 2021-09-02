@@ -58,7 +58,6 @@ class SourceAttributionModel {
         const results = await Promise.all(promises);
 
         return results.filter((el) => {
-            console.log(el);
             return el.length !== 0;
         });
     }
