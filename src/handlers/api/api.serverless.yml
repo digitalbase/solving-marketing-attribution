@@ -1,0 +1,8 @@
+getAnonymous:
+  handler: src/handlers/api/getAnonymous.handler
+  events:
+    - http: 'GET /api/anonymous/{id}'
+getUser:
+  handler: src/handlers/api/getUser.handler
+  events:
+    - http: 'GET /api/user/{id}'

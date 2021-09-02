@@ -1,6 +1,6 @@
-const { unmarshallNewImageEvent } = require('./src/utils/dynamo_stream.util');
-const dynamoDBFactory = require('./src/dynamodb.factory');
-const { UserToAnonymousModel } = require('./src/models/UserToAnonymous');
+const { unmarshallNewImageEvent } = require('../../utils/dynamo_stream.util');
+const dynamoDBFactory = require('../../utils/dynamodb.factory');
+const { UserToAnonymousModel } = require('../../models/UserToAnonymous');
 
 const dynamoDb = dynamoDBFactory();
 const model = new UserToAnonymousModel(dynamoDb);

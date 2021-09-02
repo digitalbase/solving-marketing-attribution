@@ -1,11 +1,11 @@
 // /processPage.js
 
-const extractor = require('./src/utils/event_extraction.util');
-const referrer_detection = require('./src/utils/referrer_detection.util');
-const { unmarshallNewImageEvent } = require('./src/utils/dynamo_stream.util');
+const extractor = require('../../utils/event_extraction.util');
+const referrer_detection = require('../../utils/referrer_detection.util');
+const { unmarshallNewImageEvent } = require('../../utils/dynamo_stream.util');
 
-const dynamoDBFactory = require('./src/dynamodb.factory');
-const { SourceAttributionModel } = require('./src/models/SourceAttribution');
+const dynamoDBFactory = require('../../utils/dynamodb.factory');
+const { SourceAttributionModel } = require('../../models/SourceAttribution');
 
 const dynamoDb = dynamoDBFactory();
 const model = new SourceAttributionModel(dynamoDb);

@@ -1,0 +1,22 @@
+processPage:
+  handler: src/process/processPage.handler
+  events:
+    - stream:
+        type: dynamodb
+        batchSize: 1
+        startingPosition: LATEST
+        arn:
+          Fn::GetAtt:
+            - SegmentPageDynamoDBTable
+            - StreamArn
+processIdentify:
+  handler: src/process/processIdentify.handler
+  events:
+    - stream:
+        type: dynamodb
+        batchSize: 1
+        startingPosition: LATEST
+        arn:
+          Fn::GetAtt:
+            - SegmentIdentifiesDynamoDBTable
+            - StreamArn
