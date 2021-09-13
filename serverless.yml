@@ -1,10 +1,11 @@
 service: ${env:SERVICE_NAME}
 
 package:
-  exclude:
-    - data/**
-    - events/**
-    - .idea
+  patterns:
+    - '!data/**'
+    - '!docs/**'
+    - '!events/**'
+    - '!.idea'
 
 plugins:
   - serverless-offline
