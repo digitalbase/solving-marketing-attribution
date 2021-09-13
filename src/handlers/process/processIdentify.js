@@ -15,6 +15,10 @@ module.exports.handler = async (event) => {
         return;
     }
 
+    if (!anonymousId || anonymousId === '') {
+        return;
+    }
+
     try {
         await model.storeMap(userId, anonymousId);
     } catch (e) {

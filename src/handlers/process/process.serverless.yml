@@ -1,5 +1,5 @@
 processPage:
-  handler: src/process/processPage.handler
+  handler: src/handlers/process/processPage.handler
   events:
     - stream:
         type: dynamodb
@@ -10,7 +10,7 @@ processPage:
             - SegmentPageDynamoDBTable
             - StreamArn
 processIdentify:
-  handler: src/process/processIdentify.handler
+  handler: src/handlers/process/processIdentify.handler
   events:
     - stream:
         type: dynamodb
