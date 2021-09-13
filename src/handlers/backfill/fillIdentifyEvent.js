@@ -26,8 +26,15 @@ exports.handler = async (event) => {
         const Item = await dynamoDb.get(params).promise();
         const identifyEvent = Item.Item;
 
+        if (!identifyEvent) {
+            return problem('Identify event not found');
+        }
+
+        console.log(identifyEvent);
         const { type: eventType, userId, anonymousId } = identifyEvent;
 
+        console.log('userId', userId);
+        console.log('anonymousId', anonymousId);
         await model.storeMap(userId, anonymousId);
     } catch (e) {
         console.log('Could find page event', e);

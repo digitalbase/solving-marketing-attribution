@@ -27,13 +27,18 @@ exports.handler = async (event) => {
         const Item = await dynamoDb.get(params).promise();
         const pageEvent = Item.Item;
 
+        if (!pageEvent) {
+            return problem('Page event not found');
+        }
+
         const {referrer, href} = pageEvent;
 
         const extraction = await referrer_detection(href, referrer);
 
         if (!extraction) {
             console.log('Skipping useless extraction', pageEvent);
-            return;
+
+            return problem('Skipping useless extraction');
         }
 
         await model.store(pageEvent, extraction);
