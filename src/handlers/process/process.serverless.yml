@@ -1,5 +1,6 @@
 processPage:
   handler: src/handlers/process/processPage.handler
+  description: Work through the page() event parsing context 
   events:
     - stream:
         type: dynamodb

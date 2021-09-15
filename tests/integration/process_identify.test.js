@@ -14,9 +14,9 @@ identify_payload.messageId = uuid.v4();
 identify_payload.anonymousId = anonymousId;
 identify_payload.userId = userId;
 
-describe('Feeding Events', () => {
+describe('Check if identify events are stored', () => {
 
-    it(`POST /dev/events - Store valid event`, async () => {
+    it(`POST /dev/events - Store identify event`, async () => {
         await request
             .post(`/dev/events`)
             .send(identify_payload)
