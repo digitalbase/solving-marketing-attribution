@@ -1,4 +1,6 @@
 service: ${env:SERVICE_NAME}
+frameworkVersion: '2'
+useDotenv: true
 
 package:
   patterns:
@@ -8,12 +10,14 @@ package:
     - '!.idea'
 
 plugins:
-  - serverless-offline
-  - serverless-dotenv-plugin
+#  - serverless-offline
+#  - serverless-dotenv-plugin
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  #variablesResolutionMode: 20210326 #complains over stage variable in provider
   stage: ${env:STAGE}
   region: ${env:REGION}
   iamRoleStatements:
