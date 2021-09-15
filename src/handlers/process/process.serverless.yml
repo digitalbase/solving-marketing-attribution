@@ -9,8 +9,13 @@ processPage:
           Fn::GetAtt:
             - SegmentPageDynamoDBTable
             - StreamArn
+  environment:
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
+    LOGGING: ${env:LOGGING}
+
 processIdentify:
   handler: src/handlers/process/processIdentify.handler
+  description: Store mapping between user and anonid in the database
   events:
     - stream:
         type: dynamodb
@@ -20,3 +25,6 @@ processIdentify:
           Fn::GetAtt:
             - SegmentIdentifiesDynamoDBTable
             - StreamArn
+  environment:
+    USER_MAP_TABLE: ${env:USER_MAP_TABLE}
+    LOGGING: ${env:LOGGING}

@@ -2,7 +2,12 @@ getAnonymous:
   handler: src/handlers/api/getAnonymous.handler
   events:
     - http: 'GET /api/anonymous/{id}'
+  environment:
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
 getUser:
   handler: src/handlers/api/getUser.handler
   events:
     - http: 'GET /api/user/{id}'
+  environment:
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
+    USER_MAP_TABLE: ${env:USER_MAP_TABLE}

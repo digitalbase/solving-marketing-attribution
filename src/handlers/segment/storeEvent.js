@@ -1,12 +1,10 @@
 const dynamoDBFactory = require('../../utils/dynamodb.factory');
 const dynamoDb = dynamoDBFactory();
 
-const { withStatusCode } = require('../../utils/response.util');
+const { jsonWithStatusCode } = require('../../utils/response.util');
 const { parseWith } = require('../../utils/request.util');
 
 const parseJson = parseWith(JSON.parse);
-const ok = withStatusCode(200);
-const problem = withStatusCode(400);
 
 const IDENTIFY_TABLE = process.env.IDENTIFY_TABLE;
 const PAGE_TABLE = process.env.PAGE_TABLE;
@@ -16,7 +14,7 @@ exports.handler = async (event) => {
     const { type, messageId } = request_body;
 
     if (type !== 'page' && type !== 'identify') {
-        return ok('not a page');
+        return jsonWithStatusCode(202,"Skipping event (not a page/identify)");
     }
 
     const params = {
@@ -32,8 +30,9 @@ exports.handler = async (event) => {
         await dynamoDb.put(params).promise();
     } catch (e) {
         console.log('Could not store event', e);
-        return problem(e.message);
+
+        return jsonWithStatusCode(500, e.message)
     }
 
-    return ok();
+    return jsonWithStatusCode(201,"Successfully stored the event");
 };

@@ -22,6 +22,25 @@ const withStatusCode = (statusCode, formatter = null) => {
     }
 };
 
+const jsonWithStatusCode = (statusCode = null, message) => {
+    if (100 > statusCode || statusCode > 599) {
+        throw new Error('status code out of range');
+    }
+
+    const response = {
+        statusCode: statusCode
+    };
+
+    // only send a body if there is data
+    if (message) {
+        response.body = JSON.stringify({ message });
+    }
+
+    return response;
+};
+
+
 module.exports = {
-    withStatusCode
+    withStatusCode,
+    jsonWithStatusCode
 };

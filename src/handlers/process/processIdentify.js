@@ -1,4 +1,5 @@
-const { unmarshallNewImageEvent } = require('../../utils/dynamo_stream.util');
+const { unmarshallNewImageEvent } = require('../../utils/unmarshallNewImageEvent.util');
+const { log } = require('../../utils/log.util');
 const dynamoDBFactory = require('../../utils/dynamodb.factory');
 const { UserToAnonymousModel } = require('../../models/UserToAnonymous');
 
@@ -12,17 +13,20 @@ module.exports.handler = async (event) => {
 
     // only handle dynamo INSERTS and events with type identify
     if (eventData.eventName !== 'INSERT' || eventType !== 'identify') {
+        log('No insert/identify')
         return;
     }
 
     if (!anonymousId || anonymousId === '') {
+        log('No anonymous id')
         return;
     }
 
     try {
+        log('storing', userId, anonymousId);
         await model.storeMap(userId, anonymousId);
     } catch (e) {
-        console.log(e.message)
+        log(e.message)
     }
 
     return eventData.eventName;

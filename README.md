@@ -34,3 +34,12 @@ In order to identify visitors we set up a webhook that is configured as segment.
 ## Contact
 
 Feel free to use/improve this. Feedback is welcome @ https://twitter.com/digitalbase or www.lifelog.be
+
+## Todos:
+
+[ ] Fix .env warnings/errors
+[ ] Upgrade to node 14
+[ ] Allow enabling/disabling logging
+[ ] Add tests for the full cycle
+[ ] Clean up configs/naming
+[ ] Remove local capabilities? Does this still work even?
