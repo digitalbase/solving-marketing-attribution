@@ -4,6 +4,8 @@ fillPageEvent:
     - http: 'GET /backfill/page-event/{messageId}'
   environment:
     LOGGING: ${env:LOGGING}
+    PAGE_TABLE: ${env:PAGE_TABLE}
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
 
 fillIdentifyEvent:
   handler: src/handlers/backfill/fillIdentifyEvent.handler
@@ -11,4 +13,5 @@ fillIdentifyEvent:
     - http: 'GET /backfill/identify-event/{messageId}'
   environment:
     IDENTIFY_TABLE: ${env:IDENTIFY_TABLE}
+    USER_MAP_TABLE: ${env:USER_MAP_TABLE}
     LOGGING: ${env:LOGGING}

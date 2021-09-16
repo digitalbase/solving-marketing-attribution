@@ -23,6 +23,8 @@ exports.handler = async (event) => {
         TableName: IDENTIFY_TABLE,
     };
 
+    log(params);
+
     try {
         const Item = await dynamoDb.get(params).promise();
         const identifyEvent = Item.Item;
@@ -47,7 +49,8 @@ exports.handler = async (event) => {
         log(`Storing map for userId ${userId} and anonymousId ${anonymousId}`)
         await model.storeMap(userId, anonymousId);
     } catch (e) {
-        log('Could find page event', e);
+        log('Problem storing mapping')
+        log(e.message);
         return problem(e.message);
     }
 

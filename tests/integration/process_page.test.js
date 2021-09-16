@@ -18,6 +18,8 @@ const page_payload = JSON.parse(fs.readFileSync('docs/events/page.json'));
 page_payload.messageId = uuid.v4();
 page_payload.anonymousId = anonymousId;
 
+console.log(identify_payload, page_payload);
+
 describe('Check if page events are stored', () => {
 
     it(`POST /dev/events - Store identify event`, async () => {
