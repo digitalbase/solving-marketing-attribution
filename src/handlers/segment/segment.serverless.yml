@@ -6,6 +6,7 @@ storeEvent:
   environment:
     IDENTIFY_TABLE: ${env:IDENTIFY_TABLE}
     PAGE_TABLE: ${env:PAGE_TABLE}
+    LOGGING: ${env:LOGGING}
 
 trackUser:
   handler: src/handlers/segment/trackUser.handler
@@ -26,6 +27,17 @@ identifyAnonymous:
 ## Do channel or sales attribution (based on segment key)
 identifyAttribution:
   handler: src/handlers/segment/identifyAttribution.handler
+  description:  Hook used by segment.com personas journey to fill in attribution data
   events:
     - http: 'POST /segment/identify/attribution'
+  environment:
+    USER_MAP_TABLE: ${env:USER_MAP_TABLE}
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
+    ANALYTICS_SOURCE_IDENTIFICATION_EVENT: ${env:ANALYTICS_SOURCE_IDENTIFICATION_EVENT}
+    AIRTABLE_BASE_ID: ${env:AIRTABLE_BASE_ID}
+    AIRTABLE_API_KEY: ${env:AIRTABLE_API_KEY}
+    AIRTABLE_TABLE_NAME: ${env:AIRTABLE_TABLE_NAME}
+    LOGGING: ${env:LOGGING}
+
+
 

@@ -1,6 +1,6 @@
-// /src/handlers/segment/trackAnonymous.js
 const { withStatusCode } = require('../../utils/response.util');
 const { parseWith } = require('../../utils/request.util');
+const { log } = require('../../utils/log.util');
 
 const {SegmentTracking} = require('../../SegmentTracking');
 const SegmentTracker = new SegmentTracking();
@@ -14,17 +14,19 @@ exports.handler = async (event) => {
     const { type, anonymousId, userId, traits } = request_body;
 
     if (type !== 'identify') {
+        log('Skipping, not an identify event');
         return ok('not an identify event');
     }
 
     if (
-        traits['j_o_visitor_attribution__update_traits_first_last_attribution_yuno7'] === true ||
-        traits['j_o_visitor_attribution_copy__update_traits_first_last_attribution_5flui'] === true
+        traits['j_o_visitor_attribution__update_traits_first_last_attribution_yuno7'] === true
     ) {
         const include_track_events = false;
         if (userId) {
+            log(`Tracking userId ${userId}`);
             await SegmentTracker.trackUser(userId, include_track_events);
         } else if (anonymousId) {
+            log(`Tracking anonymousId ${anonymousId}`);
             await SegmentTracker.trackAnonymous(anonymousId, include_track_events);
         }
 
@@ -38,14 +40,12 @@ exports.handler = async (event) => {
         traits['j_o_sales_attribution__sales_attribution_21_days_lzu3g'] === true
     ) {
         if (userId) {
+            log(`Tracking user sales userId ${userId}`);
             await SegmentTracker.trackUserSales(userId);
         }
 
         return ok('Web Channel Source Attribution done');
     }
 
-
-
     return problem('Incorrect payload.');
-
 };
