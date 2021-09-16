@@ -1,6 +1,7 @@
 const {withStatusCode} = require('../../utils/response.util');
 const dynamoDBFactory = require('../../utils/dynamodb.factory');
 const {UserToAnonymousModel} = require("../../models/UserToAnonymous");
+const { log } = require('../../utils/log.util');
 
 const dynamoDb = dynamoDBFactory();
 const model = new UserToAnonymousModel(dynamoDb);
@@ -27,17 +28,26 @@ exports.handler = async (event) => {
         const identifyEvent = Item.Item;
 
         if (!identifyEvent) {
+            log('Identify event not found');
             return problem('Identify event not found');
         }
 
-        console.log(identifyEvent);
         const { type: eventType, userId, anonymousId } = identifyEvent;
 
-        console.log('userId', userId);
-        console.log('anonymousId', anonymousId);
+        if (eventType !== 'identify') {
+            log('Skipping. Not identify event');
+            return;
+        }
+
+        if (!userId || !anonymousId) {
+            log('Skipping. Missing user and anonymousId');
+            return;
+        }
+
+        log(`Storing map for userId ${userId} and anonymousId ${anonymousId}`)
         await model.storeMap(userId, anonymousId);
     } catch (e) {
-        console.log('Could find page event', e);
+        log('Could find page event', e);
         return problem(e.message);
     }
 

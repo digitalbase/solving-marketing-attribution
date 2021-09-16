@@ -5,6 +5,7 @@ const {SourceAttributionModel} = require("../../models/SourceAttribution");
 
 const dynamoDb = dynamoDBFactory();
 const model = new SourceAttributionModel(dynamoDb);
+const { log } = require('../../utils/log.util');
 
 const ok = withStatusCode(200, JSON.stringify);
 const problem = withStatusCode(400);
@@ -28,6 +29,7 @@ exports.handler = async (event) => {
         const pageEvent = Item.Item;
 
         if (!pageEvent) {
+            log('Page event not found');
             return problem('Page event not found');
         }
 
@@ -36,14 +38,14 @@ exports.handler = async (event) => {
         const extraction = await referrer_detection(href, referrer);
 
         if (!extraction) {
-            console.log('Skipping useless extraction', pageEvent);
+            log('Skipping useless extraction', pageEvent);
 
             return problem('Skipping useless extraction');
         }
 
         await model.store(pageEvent, extraction);
     } catch (e) {
-        console.log('Could find page event', e);
+        log('Could find page event', e);
         return problem(e.message);
     }
 

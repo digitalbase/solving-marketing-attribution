@@ -2,8 +2,13 @@ fillPageEvent:
   handler: src/handlers/backfill/fillPageEvent.handler
   events:
     - http: 'GET /backfill/page-event/{messageId}'
+  environment:
+    LOGGING: ${env:LOGGING}
 
 fillIdentifyEvent:
   handler: src/handlers/backfill/fillIdentifyEvent.handler
   events:
     - http: 'GET /backfill/identify-event/{messageId}'
+  environment:
+    IDENTIFY_TABLE: ${env:IDENTIFY_TABLE}
+    LOGGING: ${env:LOGGING}
