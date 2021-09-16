@@ -38,12 +38,13 @@ exports.handler = async (event) => {
 
         if (eventType !== 'identify') {
             log('Skipping. Not identify event');
-            return;
+
+            return problem('Skipping. Not identify event');
         }
 
         if (!userId || !anonymousId) {
             log('Skipping. Missing user and anonymousId');
-            return;
+            return ok('Skipping. Missing user and anonymousId')
         }
 
         log(`Storing map for userId ${userId} and anonymousId ${anonymousId}`)
