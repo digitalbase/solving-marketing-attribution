@@ -8,11 +8,6 @@ const {SourceAttributionModel} = require('./models/SourceAttribution');
 const SOURCE_IDENTIFIED_EVENT_NAME = process.env.ANALYTICS_SOURCE_IDENTIFICATION_EVENT;
 
 const AirtablePlus = require('airtable-plus');
-const airtable = new AirtablePlus({
-    baseID: process.env.AIRTABLE_BASE_ID,
-    apiKey: process.env.AIRTABLE_API_KEY,
-    tableName: process.env.AIRTABLE_TABLE_NAME,
-});
 
 class SegmentTracking {
     constructor() {
@@ -52,16 +47,16 @@ class SegmentTracking {
 
     async trackUser(user_id, include_track_events= false) {
         const anonymousIds = await this._model_usermap.getAnonymousIdsForUser(user_id);
-        const attributionSessions = await this._model_source.getForAnonymousIds(anonymousIds);
+        const attributionSessions = await this._model_source.flattenSessionsForAnonymousIds(anonymousIds);
         let data = [];
 
         if (anonymousIds.length > 0) {
             const [first] = attributionSessions;
             const [last] = [...attributionSessions ].reverse(); //to not modify the original
+
             const user_properties = {
                 type: "identify",
                 userId: user_id,
-                active: false,
                 ip: null,
                 context: {
                     active:false
@@ -104,6 +99,11 @@ class SegmentTracking {
     }
 
     async trackUserSales(user_id) {
+        const airtable = new AirtablePlus({
+            baseID: process.env.AIRTABLE_BASE_ID,
+            apiKey: process.env.AIRTABLE_API_KEY,
+            tableName: process.env.AIRTABLE_TABLE_NAME,
+        });
 
         let data = [];
 
@@ -145,6 +145,10 @@ class SegmentTracking {
     }
 
     async callSegment(events) {
+        if (!process.env.ANALYTICS_WRITE_KEY) {
+            throw new Error('ANALYTICS_WRITE_KEY not set');
+        }
+
         return new Promise((resolve, reject) => {
             const data = JSON.stringify({ batch: events });
 
