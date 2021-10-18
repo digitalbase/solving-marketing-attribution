@@ -55,8 +55,8 @@ class SegmentTracking {
             const user_properties = {
                 type: "identify",
                 userId: user_id,
-                ip: null,
-                context: {
+                context: { //https://segment.com/docs/connections/spec/common/#context
+                    ip: null,
                     active:false
                 },
                 traits: {
@@ -83,7 +83,8 @@ class SegmentTracking {
                     type: "track",
                     //anonymousId: "c333e5eb-4eb2-4a9d-a312-5e3fff3e2620",
                     userId: user_id,
-                    context: {
+                    context: { //https://segment.com/docs/connections/spec/common/#context
+                        ip: null,
                         active:false
                     },
                     integrations: { All: true },
@@ -136,9 +137,8 @@ class SegmentTracking {
         const user_properties = {
             type: "identify",
             userId: user_id,
-            active: false,
-            ip: null,
-            context: {
+            context: { //https://segment.com/docs/connections/spec/common/#context
+                ip: null,
                 active:false
             },
             traits: {
@@ -213,9 +213,8 @@ class SegmentTracking {
             const user_properties = {
                 type: "identify",
                 anonymousId: anonymous_id,
-                active: false,
-                ip: null,
-                context: {
+                context: { //https://segment.com/docs/connections/spec/common/#context
+                    ip: null,
                     active:false
                 },
                 traits: {
