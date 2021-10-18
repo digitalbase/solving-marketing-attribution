@@ -1,5 +1,9 @@
 const USER_MAP_TABLE = process.env.USER_MAP_TABLE;
 
+if (!USER_MAP_TABLE) {
+    throw new Error('USER_MAP_TABLE not set');
+}
+
 class UserToAnonymousModel {
     get _baseParams() {
         return {

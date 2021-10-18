@@ -14,7 +14,7 @@ exports.handler = async (event) => {
 
     const anonymousIds = await model_usermap.getAnonymousIdsForUser(id);
     // get all things from sessions with those anonymousId
-    const attributionSessions = await model_source.getForAnonymousIds(anonymousIds);
+    const attributionSessions = await model_source.flattenSessionsForAnonymousIds(anonymousIds);
 
     return ok({
         anonymousIds : anonymousIds,
