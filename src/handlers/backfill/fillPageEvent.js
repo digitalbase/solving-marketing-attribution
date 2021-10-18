@@ -14,6 +14,10 @@ const problem = withStatusCode(400);
 
 const PAGE_TABLE = process.env.PAGE_TABLE;
 
+if (!PAGE_TABLE) {
+    throw new Error('PAGE_TABLE not set');
+}
+
 exports.handler = async (event) => {
     const {messageId} = event.pathParameters;
 

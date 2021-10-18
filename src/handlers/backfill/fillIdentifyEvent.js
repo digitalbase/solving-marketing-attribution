@@ -13,6 +13,10 @@ const problem = withStatusCode(400);
 
 const IDENTIFY_TABLE = process.env.IDENTIFY_TABLE;
 
+if (!IDENTIFY_TABLE) {
+    throw new Error('IDENTIFY_TABLE not set');
+}
+
 exports.handler = async (event) => {
     const {messageId} = event.pathParameters;
 

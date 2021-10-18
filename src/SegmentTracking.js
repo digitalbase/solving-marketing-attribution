@@ -5,8 +5,6 @@ const dynamoDBFactory = require('./utils/dynamodb.factory');
 const {UserToAnonymousModel} = require('./models/UserToAnonymous');
 const {SourceAttributionModel} = require('./models/SourceAttribution');
 
-const SOURCE_IDENTIFIED_EVENT_NAME = process.env.ANALYTICS_SOURCE_IDENTIFICATION_EVENT;
-
 const AirtablePlus = require('airtable-plus');
 
 class SegmentTracking {
@@ -73,6 +71,10 @@ class SegmentTracking {
         }
 
         if (include_track_events === true) {
+            const SOURCE_IDENTIFIED_EVENT_NAME = process.env.ANALYTICS_SOURCE_IDENTIFICATION_EVENT;
+            if (!SOURCE_IDENTIFIED_EVENT_NAME) {
+                throw new Error('SOURCE_IDENTIFIED_EVENT_NAME not set');
+            }
 
             attributionSessions.forEach((session) => {
                 const event_timestamp = new Date(session.timestamp);
@@ -99,6 +101,18 @@ class SegmentTracking {
     }
 
     async trackUserSales(user_id) {
+        if (!process.env.AIRTABLE_BASE_ID) {
+            throw new Error('AIRTABLE_BASE_ID not set');
+        }
+
+        if (!process.env.AIRTABLE_API_KEY) {
+            throw new Error('AIRTABLE_API_KEY not set');
+        }
+
+        if (!process.env.AIRTABLE_TABLE_NAME) {
+            throw new Error('AIRTABLE_TABLE_NAME not set');
+        }
+
         const airtable = new AirtablePlus({
             baseID: process.env.AIRTABLE_BASE_ID,
             apiKey: process.env.AIRTABLE_API_KEY,
@@ -215,6 +229,11 @@ class SegmentTracking {
         }
 
         if (include_track_events) {
+            const SOURCE_IDENTIFIED_EVENT_NAME = process.env.ANALYTICS_SOURCE_IDENTIFICATION_EVENT;
+            if (!SOURCE_IDENTIFIED_EVENT_NAME) {
+                throw new Error('SOURCE_IDENTIFIED_EVENT_NAME not set');
+            }
+
             attributionSessions.forEach((session) => {
                 console.log(session);
                 const tracking_properties = {

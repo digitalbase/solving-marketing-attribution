@@ -4,6 +4,10 @@ const expect = require('chai').expect;
 const supertest = require('supertest');
 const request = supertest(process.env.TEST_ENDPOINT);
 
+if (!process.env.TEST_ENDPOINT) {
+    throw new Error('TEST_ENDPOINT not set');
+}
+
 const anonymousId = 'posakd'
 
 describe('API Test', () => {

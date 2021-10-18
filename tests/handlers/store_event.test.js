@@ -7,8 +7,6 @@ const fs = require('fs');
 
 const identify_payload = JSON.parse(fs.readFileSync('docs/events/identify.json'));
 
-
-
 describe('Feeding Events', () => {
     it(`POST /dev/events - Test skipping invalid event`, async () => {
         await request

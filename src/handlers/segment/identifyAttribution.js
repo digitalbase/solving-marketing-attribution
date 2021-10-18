@@ -19,7 +19,8 @@ exports.handler = async (event) => {
     }
 
     if (
-        traits['j_o_visitor_attribution__update_traits_first_last_attribution_yuno7'] === true
+        traits['j_o_visitor_attribution__update_traits_first_last_attribution_yuno7'] === true ||
+        traits['j_o_visitor_attribution_for_last_7_days__update_traits_first_last_attribution_tfu7f' === true ]
     ) {
         const include_track_events = false;
         if (userId) {

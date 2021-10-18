@@ -7,8 +7,15 @@ const { log } = require('../../utils/log.util');
 
 const parseJson = parseWith(JSON.parse);
 
-const IDENTIFY_TABLE = process.env.IDENTIFY_TABLE;
 const PAGE_TABLE = process.env.PAGE_TABLE;
+if (!PAGE_TABLE) {
+    throw new Error('PAGE_TABLE not set');
+}
+
+const IDENTIFY_TABLE = process.env.IDENTIFY_TABLE;
+if (!IDENTIFY_TABLE) {
+    throw new Error('IDENTIFY_TABLE not set');
+}
 
 exports.handler = async (event) => {
     const request_body = parseJson(event.body);
