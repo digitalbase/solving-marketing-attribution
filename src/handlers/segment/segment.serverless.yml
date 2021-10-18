@@ -10,19 +10,38 @@ storeEvent:
 
 trackUser:
   handler: src/handlers/segment/trackUser.handler
+  description: Fire identify call with attribution sources + different track() calls for every detected visitor session
   events:
     - http: 'GET /segment/track/user/{id}'
+  environment:
+    USER_MAP_TABLE: ${env:USER_MAP_TABLE}
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
+    ANALYTICS_WRITE_KEY: ${env:ANALYTICS_WRITE_KEY}
+    ANALYTICS_SOURCE_IDENTIFICATION_EVENT: ${env:ANALYTICS_SOURCE_IDENTIFICATION_EVENT}
+    LOGGING: ${env:LOGGING}
 
 ## Fill in visitor sources (channel) or s
 identifyUser:
   handler: src/handlers/segment/identifyUser.handler
+  description: Fire identify call with attribution sources
   events:
     - http: 'GET /segment/identify/user/{id}'
+  environment:
+    USER_MAP_TABLE: ${env:USER_MAP_TABLE}
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
+    ANALYTICS_WRITE_KEY: ${env:ANALYTICS_WRITE_KEY}
+    LOGGING: ${env:LOGGING}
 
 identifyAnonymous:
   handler: src/handlers/segment/identifyAnonymous.handler
+  description: Fire identify call for anonymous users
   events:
     - http: 'GET /segment/identify/anonymous/{id}'
+  environment:
+    ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
+    ANALYTICS_WRITE_KEY: ${env:ANALYTICS_WRITE_KEY}
+    ANALYTICS_SOURCE_IDENTIFICATION_EVENT: ${env:ANALYTICS_SOURCE_IDENTIFICATION_EVENT}
+    LOGGING: ${env:LOGGING}
 
 ## Do channel or sales attribution (based on segment key)
 identifyAttribution:
@@ -34,6 +53,7 @@ identifyAttribution:
     USER_MAP_TABLE: ${env:USER_MAP_TABLE}
     ATTRIBUTION_TABLE: ${env:ATTRIBUTION_TABLE}
     ANALYTICS_SOURCE_IDENTIFICATION_EVENT: ${env:ANALYTICS_SOURCE_IDENTIFICATION_EVENT}
+    ANALYTICS_WRITE_KEY: ${env:ANALYTICS_WRITE_KEY}
     AIRTABLE_BASE_ID: ${env:AIRTABLE_BASE_ID}
     AIRTABLE_API_KEY: ${env:AIRTABLE_API_KEY}
     AIRTABLE_TABLE_NAME: ${env:AIRTABLE_TABLE_NAME}
