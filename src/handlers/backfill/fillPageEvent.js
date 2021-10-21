@@ -6,6 +6,7 @@ const {SourceAttributionModel} = require("../../models/SourceAttribution");
 const dynamoDb = dynamoDBFactory();
 const model = new SourceAttributionModel(dynamoDb);
 const { log } = require('../../utils/log.util');
+const extractor = require("../../utils/event_extraction.util");
 
 const ok = withStatusCode(200, JSON.stringify);
 const problem = withStatusCode(400);
@@ -37,7 +38,11 @@ exports.handler = async (event) => {
             return problem('Page event not found');
         }
 
-        const {referrer, href} = pageEvent;
+        console.log(pageEvent);
+        const {referrer, href} = extractor(pageEvent);
+        console.log('referrer',referrer );
+        console.log('href',href );
+
 
         const extraction = await referrer_detection(href, referrer);
 
@@ -48,10 +53,11 @@ exports.handler = async (event) => {
         }
 
         await model.store(pageEvent, extraction);
+
+        return ok(extraction);
     } catch (e) {
         log('Could find page event', e);
         return problem(e.message);
     }
 
-    return ok();
 };
