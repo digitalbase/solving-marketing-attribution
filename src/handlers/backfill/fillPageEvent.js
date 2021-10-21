@@ -38,12 +38,7 @@ exports.handler = async (event) => {
             return problem('Page event not found');
         }
 
-        console.log(pageEvent);
         const {referrer, href} = extractor(pageEvent);
-        console.log('referrer',referrer );
-        console.log('href',href );
-
-
         const extraction = await referrer_detection(href, referrer);
 
         if (!extraction) {
